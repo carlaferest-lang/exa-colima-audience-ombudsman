@@ -1,16 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
 
-const solicitudSchema = z.object({
-  nombre: z.string().trim().min(2, "Ingresa tu nombre").max(100),
-  contacto: z.string().trim().min(5, "Ingresa un correo o teléfono").max(255),
-  estacion: z.string().trim().min(1, "Indica la estación").max(100),
-  fechaTransmision: z.string().trim().max(50).optional(),
-  tipo: z.enum(["Queja", "Sugerencia", "Consulta"]),
-  mensaje: z.string().trim().min(10, "Describe tu solicitud (mín. 10 caracteres)").max(2000),
-});
-
-export type SolicitudInput = z.input<typeof solicitudSchema>;
+import { solicitudSchema } from "./solicitudes";
 
 export const registrarSolicitud = createServerFn({ method: "POST" })
   .inputValidator(solicitudSchema)

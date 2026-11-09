@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
-import { z } from "zod";
 import {
   Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText, Download,
   Menu, X, CheckCircle2, ChevronDown, Scale, Mail, Building2, ArrowRight, Mic,
@@ -11,13 +10,7 @@ import logoMark from "@/assets/defensoria-radio-mark.png.asset.json";
 import logo from "@/assets/defensoria-radio-logo.png.asset.json";
 import logoFull from "@/assets/defensoria-radio-logo-full.png.asset.json";
 import { registrarSolicitud } from "@/lib/solicitudes.functions";
-
-const EMAIL = "derechos@defensoriaradio.com";
-const WHATSAPP_DIGITOS = "525631736994";
-const WHATSAPP_LABEL = "56 3173 6994";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_DIGITOS}?text=${encodeURIComponent(
-  "Hola, quiero hacer llegar una queja, sugerencia o consulta a la Defensoría de las Audiencias.",
-)}`;
+import { EMAIL, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -74,14 +67,7 @@ const channels = [
   },
 ];
 
-const schema = z.object({
-  nombre: z.string().trim().min(2, "Ingresa tu nombre").max(100),
-  contacto: z.string().trim().min(5, "Ingresa un correo o teléfono").max(255),
-  estacion: z.string().trim().min(1, "Indica la estación").max(100),
-  fechaTransmision: z.string().trim().max(50).optional(),
-  tipo: z.enum(["Queja", "Sugerencia", "Consulta"]),
-  mensaje: z.string().trim().min(10, "Describe tu solicitud (mín. 10 caracteres)").max(2000),
-});
+const schema = solicitudSchema;
 
 function Index() {
   const [open, setOpen] = useState(false);
