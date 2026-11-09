@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audiencia_solicitudes: {
+        Row: {
+          canal: string
+          contacto: string
+          created_at: string
+          estacion: string
+          fecha_transmision: string | null
+          folio: string
+          id: string
+          mensaje: string
+          nombre: string
+          tipo: string
+        }
+        Insert: {
+          canal?: string
+          contacto: string
+          created_at?: string
+          estacion: string
+          fecha_transmision?: string | null
+          folio?: string
+          id?: string
+          mensaje: string
+          nombre: string
+          tipo: string
+        }
+        Update: {
+          canal?: string
+          contacto?: string
+          created_at?: string
+          estacion?: string
+          fecha_transmision?: string | null
+          folio?: string
+          id?: string
+          mensaje?: string
+          nombre?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
