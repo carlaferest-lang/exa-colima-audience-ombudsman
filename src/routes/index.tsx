@@ -3,14 +3,14 @@ import { useState, type FormEvent } from "react";
 import {
   Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText, Download,
   Menu, X, CheckCircle2, ChevronDown, Scale, Mail, Building2, ArrowRight, Mic,
-  ClipboardList, AlertCircle,
+  ClipboardList, AlertCircle, Accessibility,
 } from "lucide-react";
 
 import logoMark from "@/assets/defensoria-radio-mark.png.asset.json";
 import logo from "@/assets/defensoria-radio-logo.png.asset.json";
 import logoFull from "@/assets/defensoria-radio-logo-full.png.asset.json";
 import { registrarSolicitud } from "@/lib/solicitudes.functions";
-import { EMAIL, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
+import { EMAIL, TIPOS, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -52,7 +52,7 @@ const channels = [
   {
     icon: ClipboardList,
     title: "Por el formulario",
-    text: "Escribe tu queja, sugerencia o consulta en el Buzón de la Audiencia. Al enviarla recibes un folio con el que das seguimiento.",
+    text: "Escribe tu recomendación, queja o consulta en el Buzón de la Audiencia. Al enviarla recibes un folio con el que das seguimiento.",
     cta: "Ir al formulario",
     href: "#buzon",
     action: "form" as const,
@@ -144,7 +144,7 @@ function Index() {
           </span>
           <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">Tu voz en la radio, escuchada y defendida</h1>
           <p className="mt-6 max-w-2xl text-lg text-primary-foreground/80">
-            Somos el enlace independiente entre la audiencia y EXA FM 99.7 Colima. Recibimos, analizamos y damos seguimiento a tus quejas, sugerencias y consultas para garantizar contenidos responsables.
+            Somos el enlace independiente entre la audiencia y EXA FM 99.7 Colima. Recibimos, analizamos y damos seguimiento a tus recomendaciones, quejas y consultas para garantizar contenidos responsables.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a href="#buzon" className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-foreground px-6 py-3.5 font-semibold text-primary transition hover:-translate-y-0.5 hover:shadow-lift">Presentar un reporte <ArrowRight className="h-4 w-4" /></a>
@@ -196,7 +196,7 @@ function Index() {
                 <p className="mt-1 text-sm font-medium text-muted-foreground">Especialista en Derecho</p>
               </div>
               <p className="mt-4 leading-relaxed text-muted-foreground">
-                La Titular recibe, analiza y da seguimiento a las quejas, sugerencias y consultas de la audiencia, y gestiona ante la emisora las respuestas y rectificaciones que correspondan, conforme a la Ley Federal de Telecomunicaciones y Radiodifusión y a los Lineamientos Generales sobre la Defensa de las Audiencias.
+                La Titular recibe, analiza y da seguimiento a las recomendaciones, quejas y consultas de la audiencia, y gestiona ante la emisora las respuestas y rectificaciones que correspondan, conforme a la Ley Federal de Telecomunicaciones y Radiodifusión y a los Lineamientos Generales sobre la Defensa de las Audiencias.
               </p>
               <div className="mt-6 flex flex-wrap gap-3 text-sm">
                 <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2.5 font-medium transition hover:bg-card">
@@ -336,8 +336,8 @@ function Index() {
                 <div><label className={label} htmlFor="estacion">Estación / Frecuencia</label><input id="estacion" name="estacion" defaultValue="EXA FM 99.7 Colima" className={field} maxLength={100} />{err("estacion")}</div>
                 <div><label className={label} htmlFor="fechaTransmision">Fecha y hora de transmisión</label><input id="fechaTransmision" name="fechaTransmision" type="datetime-local" className={field} /></div>
                 <div className="sm:col-span-2"><label className={label} htmlFor="tipo">Tipo de solicitud</label>
-                  <select id="tipo" name="tipo" className={field} defaultValue="Queja">
-                    <option>Queja</option><option>Sugerencia</option><option>Consulta</option>
+                  <select id="tipo" name="tipo" className={field} defaultValue={TIPOS[0]}>
+                    {TIPOS.map((t) => <option key={t}>{t}</option>)}
                   </select>
                 </div>
                 <div className="sm:col-span-2"><label className={label} htmlFor="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" rows={5} maxLength={2000} className={field} />{err("mensaje")}</div>
