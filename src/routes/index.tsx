@@ -6,9 +6,10 @@ import {
   ClipboardList, AlertCircle, Accessibility, PhoneCall,
 } from "lucide-react";
 
-import logoMark from "@/assets/defensoria-radio-mark.png.asset.json";
-import logo from "@/assets/defensoria-radio-logo.png.asset.json";
-import logoFull from "@/assets/defensoria-radio-logo-full.png.asset.json";
+// Logos are served from /public so they load on any host, including GitHub Pages.
+const logoMark = { url: "/brand/defensoria-radio-mark.png" };
+const logo = { url: "/brand/defensoria-radio-logo.png" };
+const logoFull = { url: "/brand/defensoria-radio-logo-full.png" };
 import { registrarSolicitud } from "@/lib/solicitudes.functions";
 import { EMAIL, TEL_URL, TIPOS, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
 
