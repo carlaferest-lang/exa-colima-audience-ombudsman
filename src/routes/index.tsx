@@ -297,6 +297,18 @@ function Index() {
             </div>
           ))}
         </div>
+        <div className="mt-6 flex flex-col gap-5 rounded-2xl border border-primary/15 bg-secondary p-6 md:flex-row md:items-center md:p-7">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground"><Accessibility className="h-6 w-6" /></span>
+          <div>
+            <h3 className="text-lg font-semibold">¿Tienes alguna limitación o discapacidad?</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Manda un audio de voz por WhatsApp al {WHATSAPP_LABEL} o escríbenos a {EMAIL}. Con gusto te apoyamos a levantar tu reclamación: una persona de la Defensoría la redacta contigo y la registra a tu nombre con su folio de seguimiento.
+            </p>
+          </div>
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 self-start rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-deep md:ml-auto">
+            Pedir apoyo <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
       </section>
 
       {/* Form */}
@@ -319,6 +331,9 @@ function Index() {
               </p>
               <p className="flex items-center gap-3"><Scale className="h-4 w-4 shrink-0 text-primary" /> Art. 259 LFTR</p>
             </div>
+            <p className="mt-6 rounded-xl border border-primary/15 bg-secondary p-4 text-sm leading-relaxed text-muted-foreground">
+              <strong className="font-semibold text-foreground">¿Tienes alguna limitación o discapacidad?</strong> Manda un audio de voz por WhatsApp o escríbenos a {EMAIL}: te apoyamos a levantar tu reclamación y la registramos por ti con su folio.
+            </p>
           </div>
           <div className="rounded-2xl bg-background p-6 shadow-card md:p-8 lg:col-span-3">
             {sent ? (
