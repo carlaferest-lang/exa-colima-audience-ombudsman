@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Lovable App to Pages
 
 on:
   push:
@@ -15,28 +15,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # The project uses bun (bun.lock); there is no package-lock.json, which is why `npm ci` failed.
-      - name: Set up Bun
+      - name: Setup Bun
         uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build static site
+      - name: Build app
         run: bun run build
-
-      - name: Prepare Pages files
-        run: |
-          # Remove Cloudflare-only file and add a 404 fallback for GitHub Pages.
-          rm -f dist/client/_headers
-          cp dist/client/index.html dist/client/404.html
-          touch dist/client/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -44,15 +41,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/client
+          path: './dist'
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
