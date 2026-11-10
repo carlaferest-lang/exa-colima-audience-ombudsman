@@ -1,30 +1,22 @@
-import { createServerFn } from "@tanstack/react-start";
+import { supabase } from "@/integrations/supabase/client";
 
-import { solicitudSchema } from "./solicitudes";
+import type { solicitudSchema } from "./solicitudes";
+import type { z } from "zod";
 
-export const registrarSolicitud = createServerFn({ method: "POST" })
-  .inputValidator(solicitudSchema)
-  .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-
-    const { data: fila, error } = await supabaseAdmin
-      .from("audiencia_solicitudes")
-      .insert({
-        nombre: data.nombre,
-        contacto: data.contacto,
-        estacion: data.estacion,
-        fecha_transmision: data.fechaTransmision?.trim() ? data.fechaTransmision.trim() : null,
-        tipo: data.tipo,
-        mensaje: data.mensaje,
-        canal: "formulario",
-      })
-      .select("folio")
-      .single();
-
-    if (error || !fila) {
-      console.error("No se pudo registrar la solicitud:", error);
-      throw new Error("No fue posible registrar tu solicitud. Inténtalo de nuevo.");
-    }
-
-    return { folio: fila.folio };
+// Runs from the browser through a validated database function, so the form keeps
+// saving requests on static hosting (GitHub Pages) as well as on Lovable hosting.
+export async function registrarSolicitud({ data }: { data: z.output<typeof solicitudSchema> }) {
+  const { data: folio, error } = await supabase.rpc("registrar_solicitud", {
+    _nombre: data.nombre,
+    _contacto: data.contacto,
+    _estacion: data.estacion,
+    _fecha_transmision: data.fechaTransmision?.trim() ?? "",
+    _tipo: data.tipo,
+    _mensaje: data.mensaje,
   });
+  if (error || !folio) {
+    console.error("No se pudo registrar la solicitud:", error);
+    throw new Error("No fue posible registrar tu solicitud. Inténtalo de nuevo.");
+  }
+  return { folio: folio as string };
+}

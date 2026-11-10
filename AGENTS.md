@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- The site must stay fully static-hostable (GitHub Pages): public routes are prerendered via `pages` in vite.config.ts, and browser code must not depend on server functions. Why: the owner deploys `dist/client` to GitHub Pages through .github/workflows/deploy.yml.
+- Audience requests are saved through the `registrar_solicitud` database function (validates input, returns the folio) called from the browser; the table itself stays closed to the public. Why: works without a server and keeps submissions private.
+- Images the page shows live in `public/` (not Lovable asset pointers). Why: asset pointer URLs only resolve on Lovable hosting.
