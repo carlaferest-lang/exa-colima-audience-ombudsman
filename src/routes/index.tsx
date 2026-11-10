@@ -3,14 +3,14 @@ import { useState, type FormEvent } from "react";
 import {
   Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText, Download,
   Menu, X, CheckCircle2, ChevronDown, Scale, Mail, Building2, ArrowRight, Mic,
-  ClipboardList, AlertCircle, Accessibility,
+  ClipboardList, AlertCircle, Accessibility, PhoneCall,
 } from "lucide-react";
 
 import logoMark from "@/assets/defensoria-radio-mark.png.asset.json";
 import logo from "@/assets/defensoria-radio-logo.png.asset.json";
 import logoFull from "@/assets/defensoria-radio-logo-full.png.asset.json";
 import { registrarSolicitud } from "@/lib/solicitudes.functions";
-import { EMAIL, TIPOS, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
+import { EMAIL, TEL_URL, TIPOS, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -68,6 +68,33 @@ const channels = [
 ];
 
 const schema = solicitudSchema;
+
+const accessOptions = [
+  {
+    icon: Mic,
+    title: "Mandar un audio",
+    text: `Graba un audio de voz por WhatsApp al ${WHATSAPP_LABEL} contando lo que escuchaste.`,
+    cta: "Enviar audio",
+    href: WHATSAPP_URL,
+    external: true,
+  },
+  {
+    icon: Mail,
+    title: "Mandar un correo",
+    text: `Escríbenos a ${EMAIL} y te ayudamos a redactar tu solicitud.`,
+    cta: "Escribir correo",
+    href: `mailto:${EMAIL}?subject=${encodeURIComponent("Apoyo para levantar mi solicitud")}`,
+    external: false,
+  },
+  {
+    icon: PhoneCall,
+    title: "Llamar y agendar cita",
+    text: "Llámanos y agenda una cita para levantar tu petición de forma personal.",
+    cta: "Llamar para agendar",
+    href: TEL_URL,
+    external: false,
+  },
+];
 
 function Index() {
   const [open, setOpen] = useState(false);
@@ -279,7 +306,7 @@ function Index() {
         <p className="text-sm font-semibold uppercase tracking-wider text-primary">Cómo hacer llegar tu solicitud</p>
         <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">Dos formas de comunicarte con la Defensoría</h2>
         <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-          Puedes escribir tu queja en el formulario o, si prefieres, enviar un audio de voz por WhatsApp. Ambos canales llegan a la misma instancia y reciben seguimiento.
+          Puedes escribir tu recomendación, queja o consulta en el formulario o, si prefieres, enviar un audio de voz por WhatsApp. Ambos canales llegan a la misma instancia y reciben seguimiento.
         </p>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {channels.map((c) => (
