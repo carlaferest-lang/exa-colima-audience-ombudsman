@@ -15,6 +15,13 @@
       "when": 1794335994163,
       "tag": "0001_update_tipo_check_recomendacion",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794342959150,
+      "tag": "0002_registrar_solicitud_rpc",
+      "breakpoints": true
     }
   ]
 }
