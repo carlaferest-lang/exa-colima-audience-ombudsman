@@ -1,6 +1,7 @@
 # Roadmap
 
-- [ ] Revisar despliegue automático en GitHub Pages y el error de deploy.yml; conservar el guardado real del formulario.
+- [x] Despliegue automático en GitHub Pages (deploy.yml corregido, sitio estático, formulario guarda solicitudes).
+- [ ] En GitHub: Settings → Pages → Source "GitHub Actions" y dominio personalizado (lo hace la titular).
 - [ ] Conectar el dominio defensoriaradio.com al sitio (la titular pidió "guardar" su dominio).
   - El dominio está registrado y con DNS en Hostinger (nameservers aster/helios.dns-parking.com; correo con MX en Hostinger).
   - Pendiente: mostrar el flujo de conexión con los registros DNS exactos que debe agregar, sin tocar los registros de correo.
