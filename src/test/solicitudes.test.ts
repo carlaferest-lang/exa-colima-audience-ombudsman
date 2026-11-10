@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { EMAIL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
+import { EMAIL, TIPOS, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
 
 const valida = {
   nombre: "Carla Estrada",
@@ -15,8 +15,17 @@ describe("Buzón de la Audiencia", () => {
     expect(solicitudSchema.safeParse({ ...valida, mensaje: "corto" }).success).toBe(false);
   });
 
-  it("rechaza un tipo que no sea Queja, Sugerencia o Consulta", () => {
+  it("rechaza un tipo que no sea Recomendación, Queja o Consulta", () => {
     expect(solicitudSchema.safeParse({ ...valida, tipo: "Reclamo" }).success).toBe(false);
+  });
+
+  it("pone Recomendación como primera opción, no Queja", () => {
+    expect(TIPOS[0]).toBe("Recomendación");
+    expect(TIPOS).toEqual(["Recomendación", "Queja", "Consulta"]);
+  });
+
+  it("acepta una recomendación", () => {
+    expect(solicitudSchema.safeParse({ ...valida, tipo: "Recomendación" }).success).toBe(true);
   });
 
   it("rechaza una solicitud sin forma de contacto", () => {

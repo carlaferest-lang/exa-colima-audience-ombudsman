@@ -4,10 +4,10 @@ export const EMAIL = "derechos@defensoriaradio.com";
 export const WHATSAPP_DIGITOS = "525631736994";
 export const WHATSAPP_LABEL = "56 3173 6994";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_DIGITOS}?text=${encodeURIComponent(
-  "Hola, quiero hacer llegar una queja, sugerencia o consulta a la Defensoría de las Audiencias.",
+  "Hola, quiero hacer llegar una recomendación, queja o consulta a la Defensoría de las Audiencias.",
 )}`;
 
-export const TIPOS = ["Queja", "Sugerencia", "Consulta"] as const;
+export const TIPOS = ["Recomendación", "Queja", "Consulta"] as const;
 
 export const solicitudSchema = z.object({
   nombre: z.string().trim().min(2, "Ingresa tu nombre").max(100),
