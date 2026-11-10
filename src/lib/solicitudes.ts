@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 export const EMAIL = "derechos@defensoriaradio.com";
-export const WHATSAPP_DIGITOS = "525631736994";
-export const WHATSAPP_LABEL = "56 3173 6994";
+export const WHATSAPP_DIGITOS = "525631735994";
+export const WHATSAPP_LABEL = "56 3173 5994";
+export const TEL_URL = `tel:+${WHATSAPP_DIGITOS}`;
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_DIGITOS}?text=${encodeURIComponent(
   "Hola, quiero hacer llegar una recomendación, queja o consulta a la Defensoría de las Audiencias.",
 )}`;

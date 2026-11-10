@@ -39,6 +39,6 @@ describe("Buzón de la Audiencia", () => {
 
   it("usa el correo y el WhatsApp de la Defensoría", () => {
     expect(EMAIL).toBe("derechos@defensoriaradio.com");
-    expect(WHATSAPP_URL).toContain("wa.me/525631736994");
+    expect(WHATSAPP_URL).toContain("wa.me/525631735994");
   });
 });

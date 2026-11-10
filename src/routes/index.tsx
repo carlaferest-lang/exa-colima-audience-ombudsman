@@ -3,14 +3,14 @@ import { useState, type FormEvent } from "react";
 import {
   Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText, Download,
   Menu, X, CheckCircle2, ChevronDown, Scale, Mail, Building2, ArrowRight, Mic,
-  ClipboardList, AlertCircle, Accessibility,
+  ClipboardList, AlertCircle, Accessibility, PhoneCall,
 } from "lucide-react";
 
 import logoMark from "@/assets/defensoria-radio-mark.png.asset.json";
 import logo from "@/assets/defensoria-radio-logo.png.asset.json";
 import logoFull from "@/assets/defensoria-radio-logo-full.png.asset.json";
 import { registrarSolicitud } from "@/lib/solicitudes.functions";
-import { EMAIL, TIPOS, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
+import { EMAIL, TEL_URL, TIPOS, WHATSAPP_LABEL, WHATSAPP_URL, solicitudSchema } from "@/lib/solicitudes";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -68,6 +68,33 @@ const channels = [
 ];
 
 const schema = solicitudSchema;
+
+const accessOptions = [
+  {
+    icon: Mic,
+    title: "Mandar un audio",
+    text: `Graba un audio de voz por WhatsApp al ${WHATSAPP_LABEL} contando lo que escuchaste.`,
+    cta: "Enviar audio",
+    href: WHATSAPP_URL,
+    external: true,
+  },
+  {
+    icon: Mail,
+    title: "Mandar un correo",
+    text: `Escríbenos a ${EMAIL} y te ayudamos a redactar tu solicitud.`,
+    cta: "Escribir correo",
+    href: `mailto:${EMAIL}?subject=${encodeURIComponent("Apoyo para levantar mi solicitud")}`,
+    external: false,
+  },
+  {
+    icon: PhoneCall,
+    title: "Llamar y agendar cita",
+    text: "Llámanos y agenda una cita para levantar tu petición de forma personal.",
+    cta: "Llamar para agendar",
+    href: TEL_URL,
+    external: false,
+  },
+];
 
 function Index() {
   const [open, setOpen] = useState(false);
@@ -279,7 +306,7 @@ function Index() {
         <p className="text-sm font-semibold uppercase tracking-wider text-primary">Cómo hacer llegar tu solicitud</p>
         <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">Dos formas de comunicarte con la Defensoría</h2>
         <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-          Puedes escribir tu queja en el formulario o, si prefieres, enviar un audio de voz por WhatsApp. Ambos canales llegan a la misma instancia y reciben seguimiento.
+          Puedes escribir tu recomendación, queja o consulta en el formulario o, si prefieres, enviar un audio de voz por WhatsApp. Ambos canales llegan a la misma instancia y reciben seguimiento.
         </p>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {channels.map((c) => (
@@ -297,17 +324,35 @@ function Index() {
             </div>
           ))}
         </div>
-        <div className="mt-6 flex flex-col gap-5 rounded-2xl border border-primary/15 bg-secondary p-6 md:flex-row md:items-center md:p-7">
-          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground"><Accessibility className="h-6 w-6" /></span>
-          <div>
-            <h3 className="text-lg font-semibold">¿Tienes alguna limitación o discapacidad?</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Manda un audio de voz por WhatsApp al {WHATSAPP_LABEL} o escríbenos a {EMAIL}. Con gusto te apoyamos a levantar tu reclamación: una persona de la Defensoría la redacta contigo y la registra a tu nombre con su folio de seguimiento.
-            </p>
+        <div className="mt-6 rounded-2xl border border-primary/15 bg-secondary p-6 md:p-8">
+          <div className="flex items-start gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground"><Accessibility className="h-6 w-6" /></span>
+            <div>
+              <h3 className="text-lg font-semibold">¿Tienes alguna limitación o discapacidad?</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Con gusto te apoyamos a levantar tu reclamación: una persona de la Defensoría la redacta contigo y la registra a tu nombre con su folio de seguimiento. Elige la vía que te resulte más fácil.
+              </p>
+            </div>
           </div>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 self-start rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary-deep md:ml-auto">
-            Pedir apoyo <ArrowRight className="h-4 w-4" />
-          </a>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {accessOptions.map((o) => (
+              <div key={o.title} className="flex flex-col rounded-xl bg-background p-5 shadow-card">
+                <span className="grid h-10 w-10 place-items-center rounded-lg bg-accent text-primary"><o.icon className="h-5 w-5" /></span>
+                <h4 className="mt-3 font-semibold">{o.title}</h4>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{o.text}</p>
+                <a
+                  href={o.href}
+                  {...(o.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="mt-4 inline-flex items-center gap-2 self-start text-sm font-semibold text-primary transition hover:underline"
+                >
+                  {o.cta} <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            ))}
+          </div>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+            <strong className="font-semibold text-foreground">En cualquiera de las tres vías</strong>, indícanos tu nombre y un número de contacto o un correo: son necesarios para poder darte respuesta y entregarte tu folio.
+          </p>
         </div>
       </section>
 
@@ -329,10 +374,14 @@ function Index() {
                 <Mic className="h-4 w-4 shrink-0 text-primary" />
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">WhatsApp {WHATSAPP_LABEL} · audio de voz</a>
               </p>
+              <p className="flex items-center gap-3">
+                <PhoneCall className="h-4 w-4 shrink-0 text-primary" />
+                <a href={TEL_URL} className="underline-offset-4 hover:underline">Llamar para agendar una cita</a>
+              </p>
               <p className="flex items-center gap-3"><Scale className="h-4 w-4 shrink-0 text-primary" /> Art. 259 LFTR</p>
             </div>
             <p className="mt-6 rounded-xl border border-primary/15 bg-secondary p-4 text-sm leading-relaxed text-muted-foreground">
-              <strong className="font-semibold text-foreground">¿Tienes alguna limitación o discapacidad?</strong> Manda un audio de voz por WhatsApp o escríbenos a {EMAIL}: te apoyamos a levantar tu reclamación y la registramos por ti con su folio.
+              <strong className="font-semibold text-foreground">¿Tienes alguna limitación o discapacidad?</strong> Manda un audio de voz por WhatsApp, escríbenos a {EMAIL} o llámanos para agendar una cita y levantar tu petición de forma personal. Te apoyamos a redactarla y la registramos por ti con su folio.
             </p>
           </div>
           <div className="rounded-2xl bg-background p-6 shadow-card md:p-8 lg:col-span-3">
@@ -361,6 +410,9 @@ function Index() {
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" /> {fallo}
                   </p>
                 )}
+                <p className="text-xs leading-relaxed text-muted-foreground sm:col-span-2">
+                  Necesitamos tu nombre y un número de contacto o un correo para poder darte respuesta y entregarte tu folio de seguimiento.
+                </p>
                 <button type="submit" disabled={enviando} className="rounded-lg bg-primary px-6 py-3.5 font-semibold text-primary-foreground transition hover:bg-primary-deep disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2">
                   {enviando ? "Enviando…" : "Enviar solicitud"}
                 </button>
