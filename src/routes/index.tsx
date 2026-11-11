@@ -43,10 +43,11 @@ const rights = [
 ];
 
 const ethics = [
-  { n: "01", t: "Independencia editorial", d: "La emisora garantiza que sus contenidos informativos no estén subordinados a intereses comerciales o políticos." },
-  { n: "02", t: "Respeto a la dignidad", d: "Se evitará el lenguaje ofensivo, estigmatizante o que vulnere la intimidad de las personas." },
-  { n: "03", t: "Pluralidad de voces", d: "Se procurará la diversidad de opiniones y la inclusión de distintos sectores de la sociedad colimense." },
-  { n: "04", t: "Rendición de cuentas", d: "Las quejas de la audiencia serán atendidas por la Defensoría en los plazos previstos por los lineamientos." },
+  { n: "I", t: "Disposiciones generales", d: "Datos de la concesión XHCOC-FM 99.7 MHz, marco jurídico aplicable, misión, visión y valores rectores de la estación." },
+  { n: "II", t: "Programación y derechos", d: "Publicación de la barra de programación y los cinco derechos que tiene toda persona que escucha EXA 99.7." },
+  { n: "III", t: "Responsabilidades de la transmisión", d: "Separación entre noticias y opiniones, distinción publicitaria y protección a grupos vulnerables." },
+  { n: "IV", t: "La Defensoría y mecanismos de atención", d: "Designación de la Defensora, procedimiento de quejas, información mínima, plazos de respuesta y derecho de réplica." },
+  { n: "V", t: "Publicidad y transparencia", d: "Publicación de reportes estadísticos, resoluciones y recomendaciones ante la CRT en abril y octubre." },
 ];
 
 const channels = [
