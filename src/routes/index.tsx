@@ -293,11 +293,18 @@ function Index() {
               <span className="text-sm font-medium">Código de Ética para las Audiencias · JA RADIO (EXA 99.7 FM)</span>
               <span className="ml-auto hidden text-xs text-muted-foreground sm:inline">Consulta en línea · Documento vigente</span>
             </div>
-            <iframe
-              src="/codigo-de-etica.pdf#toolbar=0&navpanes=0&view=FitH"
-              title="Código de Ética para las Audiencias de EXA 99.7 FM"
-              className="h-[70vh] w-full bg-background"
-            />
+            <div className="max-h-[80vh] space-y-4 overflow-y-auto bg-background p-4 sm:p-6" onContextMenu={(e) => e.preventDefault()}>
+              {Array.from({ length: 10 }, (_, i) => (
+                <img
+                  key={i}
+                  src={`/codigo/pagina-${String(i + 1).padStart(2, "0")}.jpg`}
+                  alt={`Código de Ética para las Audiencias de EXA 99.7 FM, página ${i + 1} de 10`}
+                  className="mx-auto w-full max-w-3xl select-none rounded-lg border border-border shadow-sm"
+                  loading="lazy"
+                  draggable={false}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
