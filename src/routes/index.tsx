@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import {
-  Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText, Download,
+  Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText,
   Menu, X, CheckCircle2, ChevronDown, Scale, Mail, Building2, ArrowRight, Mic,
   ClipboardList, AlertCircle, Accessibility, PhoneCall,
 } from "lucide-react";
@@ -43,10 +43,11 @@ const rights = [
 ];
 
 const ethics = [
-  { n: "01", t: "Independencia editorial", d: "La emisora garantiza que sus contenidos informativos no estén subordinados a intereses comerciales o políticos." },
-  { n: "02", t: "Respeto a la dignidad", d: "Se evitará el lenguaje ofensivo, estigmatizante o que vulnere la intimidad de las personas." },
-  { n: "03", t: "Pluralidad de voces", d: "Se procurará la diversidad de opiniones y la inclusión de distintos sectores de la sociedad colimense." },
-  { n: "04", t: "Rendición de cuentas", d: "Las quejas de la audiencia serán atendidas por la Defensoría en los plazos previstos por los lineamientos." },
+  { n: "I", t: "Disposiciones generales", d: "Datos de la concesión XHCOC-FM 99.7 MHz, marco jurídico aplicable, misión, visión y valores rectores de la estación." },
+  { n: "II", t: "Programación y derechos", d: "Publicación de la barra de programación y los cinco derechos que tiene toda persona que escucha EXA 99.7." },
+  { n: "III", t: "Responsabilidades de la transmisión", d: "Separación entre noticias y opiniones, distinción publicitaria y protección a grupos vulnerables." },
+  { n: "IV", t: "La Defensoría y mecanismos de atención", d: "Designación de la Defensora, procedimiento de quejas, información mínima, plazos de respuesta y derecho de réplica." },
+  { n: "V", t: "Publicidad y transparencia", d: "Publicación de reportes estadísticos, resoluciones y recomendaciones ante la CRT en abril y octubre." },
 ];
 
 const channels = [
@@ -104,7 +105,6 @@ function Index() {
   const [sent, setSent] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [fallo, setFallo] = useState<string | null>(null);
-  const [downloaded, setDownloaded] = useState(false);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -271,31 +271,38 @@ function Index() {
       {/* Ethics */}
       <section id="codigo" className="bg-muted py-20">
         <div className="mx-auto max-w-7xl px-5">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-primary">Código de Ética</p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">Principios que rigen nuestra programación</h2>
-            </div>
-            <button
-              onClick={() => { setDownloaded(true); setTimeout(() => setDownloaded(false), 2500); }}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground transition hover:bg-primary-deep"
-            >
-              {downloaded ? <><CheckCircle2 className="h-4 w-4" /> Descarga iniciada</> : <><Download className="h-4 w-4" /> Descargar PDF</>}
-            </button>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wider text-primary">Código de Ética</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">Código de Ética para las Audiencias de EXA 99.7 FM</h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
+              Documento oficial de JA RADIO, S. de R.L. de C.V., en cumplimiento de la Ley Federal de Telecomunicaciones y Radiodifusión. Puedes consultarlo completo aquí mismo.
+            </p>
           </div>
-          <div className="mt-10 overflow-hidden rounded-2xl border border-border shadow-card">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {ethics.map((e) => (
+              <div key={e.n} className="rounded-2xl bg-card p-6 shadow-card transition hover:-translate-y-1 hover:shadow-lift">
+                <span className="text-sm font-bold text-primary/60">Cap. {e.n}</span>
+                <h3 className="mt-2 font-semibold">{e.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{e.d}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 overflow-hidden rounded-2xl border border-border shadow-card">
             <div className="flex items-center gap-3 border-b border-border bg-card px-6 py-4">
               <FileText className="h-5 w-5 text-primary" />
-              <span className="text-sm font-medium">Codigo_Etica_EXA_FM_99.7_Colima.pdf</span>
-              <span className="ml-auto text-xs text-muted-foreground">Versión vigente · 2026</span>
+              <span className="text-sm font-medium">Código de Ética para las Audiencias · JA RADIO (EXA 99.7 FM)</span>
+              <span className="ml-auto hidden text-xs text-muted-foreground sm:inline">Consulta en línea · Documento vigente</span>
             </div>
-            <div className="grid gap-px bg-border sm:grid-cols-2">
-              {ethics.map((e) => (
-                <div key={e.n} className="bg-background p-7 transition hover:bg-card">
-                  <span className="text-sm font-bold text-primary/60">{e.n}</span>
-                  <h3 className="mt-2 font-semibold">{e.t}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{e.d}</p>
-                </div>
+            <div className="max-h-[80vh] space-y-4 overflow-y-auto bg-background p-4 sm:p-6" onContextMenu={(e) => e.preventDefault()}>
+              {Array.from({ length: 10 }, (_, i) => (
+                <img
+                  key={i}
+                  src={`/codigo/pagina-${String(i + 1).padStart(2, "0")}.jpg`}
+                  alt={`Código de Ética para las Audiencias de EXA 99.7 FM, página ${i + 1} de 10`}
+                  className="mx-auto w-full max-w-3xl select-none rounded-lg border border-border shadow-sm"
+                  loading="lazy"
+                  draggable={false}
+                />
               ))}
             </div>
           </div>
