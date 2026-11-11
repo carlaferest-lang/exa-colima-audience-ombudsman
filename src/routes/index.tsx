@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import {
-  Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText, Download,
+  Radio, ShieldCheck, Megaphone, MessageSquareReply, Baby, Users, FileText,
   Menu, X, CheckCircle2, ChevronDown, Scale, Mail, Building2, ArrowRight, Mic,
   ClipboardList, AlertCircle, Accessibility, PhoneCall,
 } from "lucide-react";
@@ -105,7 +105,6 @@ function Index() {
   const [sent, setSent] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [fallo, setFallo] = useState<string | null>(null);
-  const [downloaded, setDownloaded] = useState(false);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
